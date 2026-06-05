@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Prototype - PostureGuard</title>
+  
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose/pose.js" crossorigin="anonymous"></script>
+
+  <style>
+    body {
+      font-family: monospace;
+      padding: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .video-container {
+      position: relative;
+      width: 640px;
+      height: 480px;
+      background-color: #ccc;
+      margin: 20px 0;
+      border: 2px solid #333;
+    }
+    video, canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 640px;
+      height: 480px;
+      transform: scaleX(-1); /* Mirror effect */
+    }
+    canvas {
+      pointer-events: none;
+    }
+    .alert-box {
+      border: 1px solid #333;
+      padding: 15px;
+      background: #f9f9f9;
+    }
+    .bad { color: red; font-weight: bold; }
+    .good { color: green; }
+    button {
+      padding: 10px 15px;
+      font-size: 14px;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Posture Tracker</h1>
+  
+  <div>
+    <button id="btnInitCam">1. Start Camera</button>
+    <button id="btnCalibrate" disabled>2. Calibrate Posture</button>
+    <button id="btnToggle" disabled>3. Start Monitoring</button>
+  </div>
+
+  <div class="video-container">
+    <video id="videoEl" autoplay muted playsinline></video>
+    <canvas id="overlayCanvas" width="640" height="480"></canvas>
+  </div>
+
+  <div class="alert-box">
+    <h2>Status: <span id="globalStatus">Waiting for initialization...</span></h2>
+    <ul>
+      <li>Head tilt: <span id="statusHead">OK</span></li>
+      <li>Uneven shoulders: <span id="statusShoulder">OK</span></li>
+      <li>Forward neck: <span id="statusNeck">OK</span></li>
+      <li>Slouching: <span id="statusSlouch">OK</span></li>
+    </ul>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
